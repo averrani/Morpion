@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 using namespace std;
 
+#include "mark.hpp"
+
 #define W 800
 #define H 600
 
@@ -13,7 +15,7 @@ class Board{
         sf::VertexArray vlines; //vertical lines 
     public:
         Board(); // constructor 
-        Board draw(int w, int h); 
+        Board drawGrid(int w, int h); 
         void display();
 };
 

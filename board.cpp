@@ -16,7 +16,7 @@ Board::Board(){
  * @param w width of the board
  * @param h height of the board
  */
-Board Board::draw(int w, int h){    
+Board Board::drawGrid(int w, int h){    
     Board b;    
     //on trace les lignes horizontales
     b.hlines[0].position = sf::Vector2f(W, H/3);
@@ -37,18 +37,19 @@ Board Board::draw(int w, int h){
 }
 
 /**
- * @brief fct that displays the board on screen 
+ * @brief fct that displays the board on screen and dots and crosses
  * 
  */
 void Board::display(){
     
     // création de la fenêtre
-    sf::RenderWindow window(sf::VideoMode(W, H), "My window"); 
+    sf::RenderWindow window(sf::VideoMode(W, H), "My window");
     Board b;
-
+    Cross c;
+    Dot d;
     // on fait tourner le programme tant que la fenêtre n'a pas été fermée
     while (window.isOpen())
-    {
+    {   
         // on traite tous les évènements de la fenêtre qui ont été générés depuis la dernière itération de la boucle
         sf::Event event;
         while (window.pollEvent(event))
@@ -56,18 +57,32 @@ void Board::display(){
             // fermeture de la fenêtre lorsque l'utilisateur le souhaite
             if (event.type == sf::Event::Closed)
                 window.close();
+            //on teste s'il y'a un clic gauche, si oui on place une croix
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                c.place(window);
+            }
+            //on teste s'il y'a un clic droit, si oui on place un cercle
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+                d.place(window);
+            }
+            
         }
 
         // effacement de la fenêtre en noir
         window.clear(sf::Color::Black);
 
-        // c'est ici qu'on dessine tout
-        // window.draw(...);
-        b = draw(W,H);
+        // c'est ici qu'on dessine la grille, et ses lignes
+        b = drawGrid(W,H);
         window.draw(b.hlines);
         window.draw(b.vlines);
-        // fin de la frame courante, affichage de tout ce qu'on a dessiné
+
+        //on dessine les cross et dot
+        window.draw(c.getCross());
+        window.draw(d.getDot());        
+
+        // affichage de tout ce qu'on a dessiné
         window.display();
     }
 }
+
 
