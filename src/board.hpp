@@ -2,8 +2,10 @@
 #define BOARD_H
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-using namespace std;
+#include <unistd.h>
 
+using namespace std;
+#include "game.hpp"
 #include "mark.hpp"
 
 #define W 800
@@ -17,6 +19,7 @@ class Board{
         Board(); // constructor 
         Board drawGrid(int w, int h); 
         void display();
+        sf::Text showText(string s);
 };
 
 

@@ -1,15 +1,28 @@
 SFML = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
-all: main
+SRC = src
+OBJ = obj
+BIN = bin
 
-mark.o: mark.hpp mark.cpp
-	g++ -c mark.cpp $(SFML) -Wall
+all: make_dir make_dir2 Morpion
 
-board.o: board.hpp board.cpp 
-	g++ -c board.cpp $(SFML) -Wall
+make_dir:
+	test -d $(OBJ) || mkdir -p $(OBJ) 
 
-main: board.o mark.o main.cpp
-	g++ board.o mark.o main.cpp -o main $(SFML)
+make_dir2:
+	test -d $(BIN) || mkdir -p $(BIN) 
+
+$(OBJ)/mark.o: $(SRC)/mark.hpp $(SRC)/mark.cpp
+	g++ -c $(SRC)/mark.cpp $(SFML) -Wall -o $@
+
+$(OBJ)/board.o: $(SRC)/board.hpp $(SRC)/board.cpp 
+	g++ -c $(SRC)/board.cpp $(SFML) -Wall -o $@
+
+$(OBJ)/game.o: $(SRC)/game.hpp $(SRC)/game.cpp 
+	g++ -c $(SRC)/game.cpp $(SFML) -Wall -o $@
+
+Morpion: $(OBJ)/board.o $(OBJ)/mark.o $(OBJ)/game.o $(SRC)/main.cpp
+	g++ $(OBJ)/board.o $(OBJ)/mark.o $(OBJ)/game.o $(SRC)/main.cpp -o $(BIN)/Morpion $(SFML)
 
 clean:
-	rm main *.o
+	rm -rf $(OBJ) $(BIN)

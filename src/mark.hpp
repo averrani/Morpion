@@ -2,12 +2,15 @@
 #define MARK_H
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+
+#define W 800
+#define H 600
+
 using namespace std;
 
 class Mark{
     public:
         virtual void draw(int x, int y) = 0;
-        virtual void place(sf::RenderWindow& window) = 0;
 };
 
 class Cross : public Mark{
@@ -21,7 +24,6 @@ class Cross : public Mark{
         sf::VertexArray getCross(){ return cross;}
 
         void draw(int x, int y);
-        void place(sf::RenderWindow& window);
 };
 
 class Dot : public Mark{
@@ -34,7 +36,6 @@ class Dot : public Mark{
         sf::CircleShape getDot(){ return dot; }
 
         void draw(int x, int y);
-        void place(sf::RenderWindow& window);
 };
 
 
