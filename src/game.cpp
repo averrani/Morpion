@@ -10,6 +10,7 @@ Game::Game(){
     for(int i=0; i<9; i++){
         moves[i] = 0;
     }
+    turn = 0;
 }
 
 /**
@@ -20,8 +21,8 @@ Game::Game(){
  * @return true si la case contient 0
  * @return false sinon
  */
-bool Game::isValid(int x, int y){
-    if(moves[x+y*3] == 0)
+bool Game::isValid(int x, int y, bool type){
+    if(moves[x+y*3] == 0 && type == turn)
         return 1;
     else return 0;
 }
@@ -35,6 +36,10 @@ bool Game::isValid(int x, int y){
  */
 void Game::addMark(int x, int y, bool type){
     moves[x+3*y] = type + 1;
+    //après avoir joué on change de tour
+    if(type == 1)
+        turn = 0;
+    else turn = 1;
 }
 
 /**
@@ -66,6 +71,15 @@ void Game::displayMarks(sf::RenderWindow &window){
         }
     }
 }
+
+//test egalite
+ bool Game::isEgalite(){
+    for(int i=0; i<9; i++){
+        if(moves[i] == 0)
+            return 0;
+    }
+    return 1;
+ }
 
 /**
  * @brief test de verification de fin de partie
@@ -99,6 +113,9 @@ int Game::isWinning(){
                 return 1;
             else return 2;
         }
+        // test egalite
+        if(isEgalite())
+            return 3;
     }
     return 0;
 }

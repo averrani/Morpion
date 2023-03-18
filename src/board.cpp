@@ -95,7 +95,7 @@ void Board::display(){
                 int x = (int)position.x / (W / 3);
                 int y = (int)position.y / (H / 3);
                 //teste si la case est valide(s'il n'y a pas de mark)
-                if(g.isValid(x, y))
+                if(g.isValid(x, y, 0))
                     g.addMark(x, y, 0);
             }
             //on teste s'il y'a un clic droit, si oui on ajoute un dot au tableau
@@ -104,7 +104,7 @@ void Board::display(){
                 int x = (int)position.x / (W / 3);
                 int y = (int)position.y / (H / 3);
                 //teste si la case est valide(s'il n'y a pas de mark)
-                if(g.isValid(x, y))
+                if(g.isValid(x, y, 1))
                     g.addMark(x, y, 1);
             }        
             
@@ -133,8 +133,11 @@ void Board::display(){
             window.clear(sf::Color::Black); //puis on efface l'ecran
             if(g.isWinning() == 1) //pour aficher le vainqueur
                 window.draw(b.showText("Les rouges ont gagne"));
-            else
+            else if(g.isWinning() == 2)
                 window.draw(b.showText("Les blancs ont gagne"));
+            else 
+                window.draw(b.showText("Egalite"));
+
             window.display();
             sleep(3); //pendant 3 sec
             window.close(); // et on ferme la fenetre
